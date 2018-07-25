@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('VM Creation') {
             steps {
-                echo 'Building !!!!Fishsticks!!!...'
+                echo 'Liste der Flavor:'
+                openstack flavor list
             }
         }
         stage('Test') {
