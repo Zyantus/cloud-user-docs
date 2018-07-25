@@ -5,7 +5,9 @@ pipeline {
         stage('VM Creation') {
             steps {
                 echo 'Liste der Flavor:'
-                ls -la
+                sh '''#!/bin/bash
+                openstack flavor list
+                '''
             }
         }
         stage('Test') {
