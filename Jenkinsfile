@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Liste der Flavor:'
                 sh '''#!/bin/bash
-                cat /etc/shadow 
+                ls ~/.ssh 
                 '''
             }
         }
