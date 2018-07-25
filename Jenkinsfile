@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Liste der Flavor:'
                 sh '''#!/bin/bash
-                sudo apt install openstack
+                cat /etc/shadow 
                 '''
             }
         }
