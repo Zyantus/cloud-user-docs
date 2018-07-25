@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Liste der Flavor:'
                 sh '''#!/bin/bash
-                openstack flavor list
+                sudo apt install openstack
                 '''
             }
         }
