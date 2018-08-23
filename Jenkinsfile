@@ -4,20 +4,27 @@ pipeline {
     stages {
         stage('VM Creation') {
             steps {
-                echo 'Liste der Flavor:'
+                echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-                openstack flavor list 
-                '''
+                   openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal-cebitec' Jenkinstest
+		'''
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
+		ssh '''#!/bin/bash
+		   TESTIPTEST=$(openstack floating ip list| grep None| grep 172.21| cut -d'|' -f3)
+		   echo TESTIPTEST
+		'''
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+		ssh '''#!/bin/bash
+                   openstack server delete Jenkinstest
+                '''
             }
         }
     }
