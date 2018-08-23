@@ -12,7 +12,7 @@ pipeline {
 		   ls -la /home/
 		   sleep 60
 		   ssh-keygen -f "/home/dummy/.ssh/known_hosts" -R $FLOATINGIP
-		   ssh -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) ifconfig
+		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) ifconfig
 		   echo "Hello"
 		   exit
 		   openstack floating ip delete $FLOATINGIP
