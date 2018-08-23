@@ -11,6 +11,7 @@ pipeline {
 		   openstack server add floating ip Jenkinstest $FLOATINGIP
 		   ls -la /home/
 		   sleep 60
+		   ssh-keygen -f "/home/dummy/.ssh/known_hosts" -R $FLOATINGIP
 		   ssh -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) ifconfig
 		   echo "Hello"
 		   exit
