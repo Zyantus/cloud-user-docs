@@ -17,7 +17,7 @@ pipeline {
 		   wget https://github.com/Zyantus/cloud-user-docs/archive/master.zip
 		   unzip master.zip
 		   cd cloud-user-docs-master/AnsibleRoles
-		   
+		   ansible-playbook playbook.yml
 		   exit
 		   openstack floating ip delete $FLOATINGIP
 		'''
