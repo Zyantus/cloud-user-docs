@@ -14,8 +14,7 @@ pipeline {
             steps {
                 echo 'Testing...'
 		ssh '''#!/bin/bash
-		   TESTIPTEST=$(openstack floating ip list| grep None| grep 172.21| cut -d'|' -f3)
-		   echo $TESTIPTEST
+		   openstack floating ip list| grep None| grep 172.21| cut -d'|' -f3
 		'''
             }
         }
