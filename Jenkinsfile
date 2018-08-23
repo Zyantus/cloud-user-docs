@@ -13,13 +13,7 @@ pipeline {
 		   sleep 60
 		   echo $FLOATINGIP
 		   rm /home/dummy/.ssh/known_hosts
-		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP)
-		   sudo apt install -y ansible unzip python-apt
-		   wget https://github.com/Zyantus/cloud-user-docs/archive/master.zip
-		   unzip master.zip
-		   cd cloud-user-docs-master/AnsibleRoles
-		   ansible-playbook playbook.yml
-		   exit
+		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'sudo apt install -y ansible unzip python-apt; wget https://github.com/Zyantus/cloud-user-docs/archive/master.zip; unzip master.zip; cd cloud-user-docs-master/AnsibleRoles; ansible-playbook playbook.yml'
 		   openstack floating ip delete $FLOATINGIP
 		'''
             }
