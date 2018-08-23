@@ -10,7 +10,7 @@ pipeline {
 		   FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
 		   openstack server add floating ip Jenkinstest $FLOATINGIP
 		   ls -la /home/
-		   ssh -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP)
+		   ssh -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) ifconfig
 		   echo "Hello"
 		   exit
 		   openstack floating ip delete $FLOATINGIP
