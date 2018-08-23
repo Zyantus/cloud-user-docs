@@ -6,7 +6,13 @@ pipeline {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-                   openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal-cebitec' Jenkinstest
+                   openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' Jenkinstest
+		   FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
+		   openstack server add floating ip Jenkinstest $FLOATINGIP
+		   ssh -i Jenkins.pem ubuntu@$(echo $FLOATINGIP)
+		   echo "Hello"
+		   exit
+		   openstack floating ip delete $FLOATINGIP
 		'''
             }
         }
@@ -14,8 +20,6 @@ pipeline {
             steps {
                 echo 'Testing...'
 		sh '''#!/bin/bash
-		   TESTIPTEST=$(openstack floating ip list| grep None| grep 172.21| cut -d'|' -f3)
-		   echo $TESTIPTEST
 		'''
             }
         }
