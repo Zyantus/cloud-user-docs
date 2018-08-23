@@ -14,7 +14,7 @@ pipeline {
 		   echo $FLOATINGIP
 		   rm /home/dummy/.ssh/known_hosts
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) ifconfig
-		   sudo apt install -y ansible
+		   sudo apt install -y ansible unzip python-apt
 		   wget https://github.com/Zyantus/cloud-user-docs/archive/master.zip
 		   unzip master.zip
 		   cd cloud-user-docs-master/AnsibleRoles

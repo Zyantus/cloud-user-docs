@@ -1,4 +1,5 @@
 ---
-- hosts:localhost
+- hosts: localhost
+  become: True
   roles:
       - Zyantus.x2go
