@@ -13,15 +13,16 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-		ssh '''#!/bin/bash
-		   openstack floating ip list| grep None| grep 172.21| cut -d'|' -f3
+		sh '''#!/bin/bash
+		   TESTIPTEST=$(openstack floating ip list| grep None| grep 172.21| cut -d'|' -f3)
+		   echo $TESTIPTEST
 		'''
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-		ssh '''#!/bin/bash
+		sh '''#!/bin/bash
                    openstack server delete Jenkinstest
                 '''
             }
