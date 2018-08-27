@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('VM Creation') {
             steps {
-		echo $GIT_BRANCH
+		def branch = env.BRANCH_NAME
+		echo $branch
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
                    openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' Jenkinstest
