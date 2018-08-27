@@ -14,7 +14,7 @@ pipeline {
 		   echo $FLOATINGIP
 		   rm /home/dummy/.ssh/known_hosts
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'sudo apt install -y ansible unzip python-apt; wget https://github.com/Zyantus/cloud-user-docs/archive/master.zip; unzip master.zip;'
-		   [ $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cd cloud-user-docs-master/AnsibleRoles; ansible-playbook playbook.yml; echo $?') -gt 0 ] && false
+		   [[ $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cd cloud-user-docs-master/AnsibleRoles; ansible-playbook playbook.yml; echo $?') -gt 0 ]] && false
 		   openstack floating ip delete $FLOATINGIP
 		'''
             }
