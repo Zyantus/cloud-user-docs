@@ -2,6 +2,14 @@ pipeline {
     agent any
 
     stages {
+	stage('FALSE'){
+	    steps {
+		echo 'Forcing Error:'
+		sh '''#!/bin/bash
+		   false
+		'''
+		}
+	}
         stage('VM Creation') {
             steps {
                 echo 'Bau Virt.Masch.:'
