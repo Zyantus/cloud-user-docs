@@ -12,9 +12,11 @@ pipeline {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
 		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
-		   echo $GIT_BRANCH | awk -F '/' '{ print $NF }'
+		   echo $GIT_BRANCH | awk -F '/' '{ print $NF }' > /home/dummy/GITBRANCH
 		   echo $GIT_BRANCH
-		   echo $GITBRANCH
+		   cat /home/dummy/GITBRANCH
+		   GITBRANCH = cat /home/dummy/GITBRANCH
+		   echo $GITBRANCH 
 		   exit 1 
 		   source /home/dummy/CloudComputing-openrc.sh
                    openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' $GITBRANCH 
