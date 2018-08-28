@@ -11,8 +11,8 @@ pipeline {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
-		   cut -d\"/\" -f2- GIT_BRANCH > GIT_BRANCH
+		   git rev-parse --abbrev-ref HEAD > GIT_BRANC
+		   cut -d\"/\" -f2- GIT_BRANC > GIT_BRANC
 		   echo "Hase" > GIT_BRANCH
 		   echo $GIT_BRANCH
 		   exit 1 
