@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
+		   git rev-parse --abbrev-ref HEAD | awk -F "/" '{print $NF}' > GIT_BRANCH
 		   echo $GIT_BRANCH
 		   echo "Wuhu!!!"
 		   exit 1
