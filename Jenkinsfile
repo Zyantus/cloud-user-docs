@@ -16,7 +16,8 @@ pipeline {
 		   GITBRANCH=$(cat /home/dummy/GITBRANCH)
 		   echo $GITBRANCH 
 		   REPOSI=$(echo "https://github.com/Zyantus/cloud-user-docs/archive/$GITBRANCH.zip")
-		   echo $REPOSI
+		   echo "${REPOSI}"
+		   exit 1
 		   source /home/dummy/CloudComputing-openrc.sh
                    openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' $GITBRANCH 
 		   FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
