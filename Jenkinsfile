@@ -11,8 +11,8 @@ pipeline {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-		   git rev-parse --abbrev-ref HEAD | cut -d"/" -f2- > GIT_BRANCH
-		   echo $GIT_BRANCH
+		   git rev-parse --abbrev-ref HEAD | cut -d"/" -f3- > GIT_BRANCH
+		   echo $GIT_BRANCH 
 		   source /home/dummy/CloudComputing-openrc.sh
                    openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' $GIT_BRANCH 
 		   FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
