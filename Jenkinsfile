@@ -23,7 +23,7 @@ pipeline {
 		   rm /home/dummy/.ssh/known_hosts
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'sudo apt install -y ansible unzip python-apt git; git pull -b $GIT_BRANCH https://github.com/Zyantus/cloud-user-docs/;'
 		   [ $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cd cloud-user-docs-master/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed=' > FAIL; awk -F "=" '{print $NF}' FAIL ') -gt 0 ] && echo "FEHLER!!!" && openstack floating ip delete $FLOATINGIP && openstack server delete $GIT_BRANCH && exit 1
-		   echo "Platz fuer Tests:"
+		   echo "Platz fuer Tests"
 		   openstack floating ip delete $FLOATINGIP
 		   openstack server delete Jenkinstest
 		'''
