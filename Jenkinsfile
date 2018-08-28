@@ -23,7 +23,7 @@ pipeline {
 		   sleep 150
 		   echo $FLOATINGIP
 		   rm /home/dummy/.ssh/known_hosts
-		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'sudo apt install -y ansible unzip python-apt git; git pull -b $GITBRANCH https://github.com/Zyantus/cloud-user-docs.git;'
+		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'sudo apt install -y ansible unzip python-apt git; git clone -b $GITBRANCH https://github.com/Zyantus/cloud-user-docs.git;'
 		   [ $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cd cloud-user-docs-master/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed' > /var/tmp/FAIL; cat /var/tmp/FAIL | rev | cut -d"=" -f1 | rev ') -gt 0 ] && echo "FEHLER!!!" &&  ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL' && openstack floating ip delete $FLOATINGIP && openstack server delete $GITBRANCH && exit 1
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL'
 		   echo "Platz fuer Tests:"
