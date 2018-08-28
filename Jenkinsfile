@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-		   false
+		   exit 1
 		   sh 'printenv'
 		   source /home/dummy/CloudComputing-openrc.sh
                    openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' Jenkinstest
