@@ -13,6 +13,7 @@ pipeline {
                 sh '''#!/bin/bash
 		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
 		   cut -d\"/\" -f2- GIT_BRANCH > GIT_BRANCH
+		   echo "Hase" > GIT_BRANCH
 		   echo $GIT_BRANCH
 		   exit 1 
 		   source /home/dummy/CloudComputing-openrc.sh
