@@ -13,6 +13,7 @@ pipeline {
                 sh '''#!/bin/bash
 		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
 		   echo $GIT_BRANCH
+		   echo "Wuhu!!!"
 		   exit 1
 		   source /home/dummy/CloudComputing-openrc.sh
                    openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' Jenkinstest
