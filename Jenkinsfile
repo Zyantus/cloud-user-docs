@@ -15,7 +15,7 @@ pipeline {
 		   echo $GIT_BRANCH | awk -F '/' '{ print $NF }' > /home/dummy/GITBRANCH
 		   echo $GIT_BRANCH
 		   cat /home/dummy/GITBRANCH
-		   GITBRANCH = cat /home/dummy/GITBRANCH
+		   GITBRANCH=$(cat /home/dummy/GITBRANCH)
 		   echo $GITBRANCH 
 		   exit 1 
 		   source /home/dummy/CloudComputing-openrc.sh
