@@ -12,7 +12,7 @@ pipeline {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
 		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
-		   echo $GIT_BRANCH | cut -d"/" -f1 > GITBRANCH
+		   echo $GIT_BRANCH | awk -F '/' '{ print $NF }' > GITBRANCH
 		   echo $GIT_BRANCH
 		   echo $GITBRANCH
 		   exit 1 
