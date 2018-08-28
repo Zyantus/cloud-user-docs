@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
-		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH'
+		   git rev-parse --abbrev-ref HEAD > GIT_BRANCH
 		   git_branch = readFile('GIT_BRANCH').trim()
 		   echo $git_branch
 		   source /home/dummy/CloudComputing-openrc.sh
