@@ -22,7 +22,7 @@ pipeline {
 		   sleep 150
 		   rm /home/dummy/.ssh/known_hosts
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "sudo apt install -y ansible unzip python-apt; wget $REPOSI; unzip $GITBRANCH.zip"
-		   [ $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "cd cloud-user-docs-$GITBRANCH/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed' > /var/tmp/FAIL; cat /var/tmp/FAIL | tail -n2 | head -n1 | rev | cut -d'=' -f1 | rev ") -gt 0 ] && echo "FEHLER!!!" &&  ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL' && openstack floating ip delete $FLOATINGIP && openstack server delete $GITBRANCH && exit 1
+		   [ $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "cd cloud-user-docs-$GITBRANCH/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed' > /var/tmp/FAIL; grep  -Eo '^[0-9]+$' /var/tmp/FAIL | tail -1") -gt 0 ] && echo "FEHLER!!!" &&  ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL' && openstack floating ip delete $FLOATINGIP && openstack server delete $GITBRANCH && exit 1
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL'
 		   echo "Platz fuer Tests:"
 		   openstack floating ip delete $FLOATINGIP
