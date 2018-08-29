@@ -38,7 +38,7 @@ pipeline {
                    source /home/dummy/CloudComputing-openrc.sh
                    FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
                    openstack server add floating ip $GITBRANCH $FLOATINGIP
-	 	   sleep 150
+	 	   sleep 10
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "echo "INSERT TESTS" "
 		   openstack floating ip delete $FLOATINGIP
 		'''
