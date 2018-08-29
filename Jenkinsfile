@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('TESTING') {
+        stage('INIT VM') {
             steps {
                 echo 'Bau Virt.Masch.:'
                 sh '''#!/bin/bash
@@ -26,9 +26,31 @@ pipeline {
 		   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL'
 		   echo "Platz fuer Tests:"
 		   openstack floating ip delete $FLOATINGIP
-		   openstack server delete $GITBRANCH
 		'''
             }
         }
+        stage('TESTING') {
+           steps {
+                git rev-parse --abbrev-ref HEAD > GIT_BRANCH
+                echo $GIT_BRANCH | awk -F '/' '{ print $NF }' > /home/dummy/GITBRANCH
+                GITBRANCH=$(cat /home/dummy/GITBRANCH) 
+                source /home/dummy/CloudComputing-openrc.sh
+		FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
+                openstack server add floating ip $GITBRANCH $FLOATINGIP
+		sleep 150
+		ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "echo "INSERT TESTS" "
+		openstack floating ip delete $FLOATINGIP
+           }    
+        }  
+
+	stage('CLEAN') {
+	   steps {
+		git rev-parse --abbrev-ref HEAD > GIT_BRANCH
+                echo $GIT_BRANCH | awk -F '/' '{ print $NF }' > /home/dummy/GITBRANCH
+                GITBRANCH=$(cat /home/dummy/GITBRANCH)
+		source /home/dummy/CloudComputing-openrc.sh
+		openstack server delete $GITBRANCH
+	   }
+	}
     }
 }
