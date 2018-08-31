@@ -19,6 +19,7 @@ pipeline {
 			   source /home/dummy/CloudComputing-openrc.sh
           		   openstack server create --key-name Jenkins --image 'Ubuntu 16.04 LTS (2018-08-16)' --flavor de.NBI.small --network 'internal' $GITBRANCH 
 			   FLOATINGIP=$(openstack floating ip create external| grep floating_ip| cut -d'|' -f3)
+			   sleep 10
 			   openstack server add floating ip $GITBRANCH $FLOATINGIP
 			   rm /home/dummy/.ssh/known_hosts
 			   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "until [ ! -e /var/lib/dpkg/lock ]; do sleep 10; done; sudo apt install -y ansible unzip python-apt; wget $REPOSI; unzip $GITBRANCH.zip; cd cloud-user-docs-$GITBRANCH/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed' > /var/tmp/FAIL "
