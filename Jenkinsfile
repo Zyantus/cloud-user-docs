@@ -23,7 +23,7 @@ pipeline {
 			   openstack server add floating ip $GITBRANCH $FLOATINGIP
 			   sleep 10
 			   rm /home/dummy/.ssh/known_hosts
-			   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "until [ ! -e /var/lib/dpkg/lock ]; do sleep 10; done; sudo apt install -y ansible unzip python-apt; wget $REPOSI; unzip $GITBRANCH.zip; cd cloud-user-docs-$GITBRANCH/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed' > /var/tmp/FAIL "
+			   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) "until [[ ! $(ps aux | grep -i apt | grep -v grep) ]]; do sleep 10; done; sudo apt install -y ansible unzip python-apt; wget $REPOSI; unzip $GITBRANCH.zip; cd cloud-user-docs-$GITBRANCH/AnsibleRoles; ansible-playbook playbook.yml | grep 'failed' > /var/tmp/FAIL "
 			   [ ! $(ssh -oStrictHostKeyChecking=no -n -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'grep 'failed=0' /var/tmp/FAIL' ) ] && echo "FEHLER!!!" &&  ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL' && openstack floating ip delete $FLOATINGIP && exit 1
 			   ssh -oStrictHostKeyChecking=no -i /home/dummy/Jenkins.pem ubuntu@$(echo $FLOATINGIP) 'cat /var/tmp/FAIL'
 			   openstack floating ip delete $FLOATINGIP
